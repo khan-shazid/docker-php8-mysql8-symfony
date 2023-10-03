@@ -1,9 +1,1 @@
-* docker-compose up -d --build
-
-* docker exec -it php82-container bash (to enter bash terminal for docker)
-
-* docker-compose run --rm php82-service php bin/console doctrine:database:create #to create database
-
-* ./bin/console cache:clear --env=prod
-
-* docker exec -it mysql8-container bash
+# https://collabnix.com/warning-the-requested-images-platform-linux-amd64-does-not-match-the-detected-host-platform-linux-arm64-v8/

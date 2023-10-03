@@ -6,16 +6,19 @@ networks:
 services:
     #nginx
     nginx-service:
-        image: nginx:stable-alpine
+        image: nginx:latest
+        # image: nginx:stable-alpine
         container_name: nginx-container
         ports:
             - "8080:80"
         volumes:
             - ./app:/var/www/project
+            - ./scrapper:/scrapper
             - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
         depends_on:
             - php82-service
             - mysql8-service
+            - node-service
         networks:
             - nginx-php82-mysql8-node
     #php
@@ -49,10 +52,16 @@ services:
 
     #node
     node-service:
-        image: node
+        # platform: linux/x86_64
+        # image: node
+        build:
+            context: ./scrapper
+            dockerfile: Dockerfile
         container_name: node-container
+        ports:
+            - "4000:4000"
         volumes:
-            - ./app:/var/www/project
-        working_dir: /var/www/project
+            - ./scrapper:/scrapper
+        # working_dir: /var/www/scrapper
         networks:
             - nginx-php82-mysql8-node
